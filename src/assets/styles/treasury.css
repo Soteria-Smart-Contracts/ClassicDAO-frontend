@@ -1,0 +1,142 @@
+.treasuryMain {
+  text-align: left;
+}
+
+.treasuryMain > h1 {
+  font-weight: 400;
+  margin-left: 3%;
+}
+
+.treasuryMain > h2 {
+  margin-left: 3%;
+  font-weight: 400;
+  font-size: 28px;
+}
+
+.treasuryHolder {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: 65% 35%;
+  grid-gap: 15px;
+  padding: 30px;
+  padding-bottom: 6%;
+  border: 1px none;
+  border-radius: 30px;
+  background: #27282a;
+}
+
+.roiHolder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  border: 2px none;
+  border-radius: 30px;
+  background-color: #27282a;
+}
+
+.roi-table {
+  width: 100%;
+  justify-content: space-around;
+  text-align: left;
+  padding-left: 75px;
+}
+
+.bigBox {
+  grid-template-columns: auto auto;
+  grid-template-rows: 65% 35%;
+  grid-column: span 2;
+  border: 1px solid #808080;
+  border-radius: 20px;
+  padding: 20px;
+  align-self: center;
+  height: fit-content;
+}
+
+.bigBox td {
+  font-weight: 200;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  margin-right: 2%;
+}
+
+.bigBox tr {
+  font-weight: 200;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+.midBox {
+  grid-column: span 2;
+  border: 1px solid #808080;
+  border-radius: 20px;
+  padding: 20px;
+  align-self: center;
+  height: 184px;
+}
+
+.midBox table {
+  width: 100%;
+}
+
+.midBox table td {
+  padding: 5px;
+}
+
+.smolBox {
+  grid-column: span 1;
+  border: 1px solid #808080;
+  border-radius: 20px;
+  padding: 20px;
+  font-size: smaller;
+  align-self: center;
+  height: 184px;
+}
+
+.mainTitle {
+  display: block;
+  font-weight: 700;
+}
+
+.secondaryTitle {
+  display: block;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.secondaryTitle p {
+  margin-left: 3%;
+}
+
+.total-treasury {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.total-amount {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.total-amount p {
+  margin: 2%;
+}
+
+@media screen and (min-width: 320px) and (max-width: 430px) and (max-height: 932px) {
+  .treasuryHolder {
+    display: block;
+  }
+
+  .treasuryHolder > * {
+    margin-bottom: 10px;
+  }
+
+  .roi-table {
+    padding-left: 0;
+    text-align: right;
+  }
+}

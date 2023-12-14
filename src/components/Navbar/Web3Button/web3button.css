@@ -1,0 +1,44 @@
+.web3 {
+  height: 45px;
+  width: 140px;
+  padding: 0;
+  background-color: #0a8310;
+  color: white;
+}
+
+.address {
+  font-size: 15px;
+}
+
+.balance {
+  font-size: 10px;
+}
+
+.unsupported-network {
+  background-color: red;
+}
+
+.web3-button-dropdown-content {
+  border-radius: 12px;
+  margin-top: 8px;
+  min-width: 40px !important;
+  background-color: #9eb4a069 !important;
+}
+
+.web3-button-dropdown-content li,
+ul {
+  padding: 0;
+}
+
+.web3-button-dropdown-content button {
+  width: 96%;
+  margin: 4px 2px;
+  background-color: rgba(248, 248, 248);
+  border: 1px solid rgb(197, 196, 196);
+}
+
+.web3-button-dropdown-content button:hover {
+  background-color: #0a8310;
+  box-shadow: 1px 2px 6px #61a365;
+  border: 2px solid #61a365;
+}

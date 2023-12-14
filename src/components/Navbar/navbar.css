@@ -1,0 +1,132 @@
+.bar {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  top: 0;
+  left: 0;
+  background-color: #131313;
+  width: 100%;
+  height: 67px;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.bar a {
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.bar a li {
+  font-size: 20px;
+  margin: 10px;
+}
+
+.homeIcon {
+  margin-right: 24px;
+  transition: transform 0.3s;
+  width: 75px;
+  height: 75px;
+}
+
+.homeIcon:hover {
+  color: rgb(171, 212, 130);
+  transform: scale(1.05);
+}
+
+.link {
+  color: white;
+  margin-right: 14px;
+  background-color: #13131300;
+  transition: text-shadow 0.3s;
+}
+
+.selectedLink {
+  color: rgb(165, 255, 74);
+  font-weight: bolder;
+  margin-right: 42px;
+}
+
+.link:hover {
+  color: rgb(171, 212, 130);
+  text-shadow: 5px 3px 18px #61a365;
+}
+
+.linkHolder {
+  display: flex;
+  align-items: center;
+  margin-left: 42px;
+}
+
+.search-input {
+  background: none;
+  border: 2px solid #464646;
+}
+
+.search-input::placeholder {
+  color: white;
+  opacity: 80%;
+  padding-left: 14px;
+}
+
+.search-container {
+  margin-left: 88px;
+}
+
+.web3 {
+  border-radius: 18px;
+}
+
+.web3-container {
+  margin-right: 50px;
+}
+
+.hamburger-menu-bars {
+  display: none;
+}
+
+.mobile-nav-menu {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .linkHolder {
+    display: none;
+  }
+
+  .search-container {
+    display: none;
+  }
+
+  .hamburger-menu-bars {
+    display: flex;
+    width: 8%;
+    margin-left: 16px;
+  }
+
+  .web3-container {
+    display: flex;
+    margin-right: 16px;
+  }
+
+  .mobile-nav-menu {
+    margin-top: 40px;
+    width: 100%;
+    margin-left: -16px;
+    display: block;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    background-color: #131313;
+    padding: 24px 16px;
+  }
+
+  .link {
+    display: block;
+    margin-right: 0;
+  }
+  .link:hover {
+    color: rgb(165, 255, 74);
+    text-shadow: none;
+  }
+}

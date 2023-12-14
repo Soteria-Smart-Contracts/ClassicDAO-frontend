@@ -1,0 +1,992 @@
+.governanceMain {
+  text-align: left;
+}
+
+.governanceHeader {
+  display: flex;
+}
+
+.governanceHeader > h1 {
+  font-weight: 400;
+  margin: 0;
+}
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: 10px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cardHolder {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 24px;
+  width: 95%;
+  height: 50%;
+  padding-left: 1%;
+}
+
+.proposalCard {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  height: 328px;
+  border-radius: 24px;
+  margin: 2%;
+  background-color: #27282a;
+  padding: 8px;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 3% 5%;
+  height: 16%;
+}
+
+.cardTopLeft {
+  display: flex;
+  align-items: center;
+}
+
+.cardTop img {
+  border-radius: 14px;
+  width: 34px;
+  height: 34px;
+}
+
+.cardTopName {
+  font-weight: 600;
+  margin-left: 14px;
+}
+
+.statusBadge {
+  border-radius: 16px;
+  padding: 2px 32px 4px;
+  margin-right: 18px;
+  height: fit-content;
+}
+
+.statusBadgeModal {
+  height: 25%;
+}
+
+.badgePending {
+  background-color: #9f7e07;
+  color: white;
+}
+
+.badgeRejected {
+  background: linear-gradient(to bottom, #9e2e2e, #461515);
+  color: white;
+}
+
+.badgePassed {
+  background: linear-gradient(to bottom, #109817, #0a837d);
+  color: white;
+}
+
+.badgeActive {
+  background-color: #0a8310;
+  color: white;
+}
+
+.cardContent {
+  margin: 1% 5%;
+  height: 48%;
+}
+
+.voting-area {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.referendum-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.post-referendum {
+  margin-top: 5%;
+}
+
+.votingResults {
+  max-width: 100%;
+}
+
+.votingResultsDown {
+  display: flex;
+  flex-direction: row;
+  max-width: 90%;
+  margin: 0 auto;
+  margin-top: 1rem;
+}
+
+.multiOption {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  grid-column: span 2;
+  border: 1px solid white;
+  border-radius: 16px;
+  width: 75% !important;
+}
+
+.multi-options-results {
+  display: flex;
+  flex-direction: column;
+}
+
+.option-box {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 16px;
+  border-radius: 16px;
+  height: 2rem;
+}
+
+.voting-option-percentage-bar {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 200%;
+  align-items: flex-start;
+}
+
+.voting-option-percentage-bar::-webkit-meter-bar {
+  background: none;
+}
+
+.voting-option-percentage-bar-opt1::-webkit-meter-optimum-value,
+.option-button-opt1 {
+  background: #0a8310;
+}
+.voting-option-percentage-bar-opt2::-webkit-meter-optimum-value,
+.option-button-opt2 {
+  background: #9e2e2e;
+}
+.voting-option-percentage-bar-opt3::-webkit-meter-optimum-value,
+.option-button-opt3 {
+  background: #9f7e07;
+}
+.voting-option-percentage-bar-opt4::-webkit-meter-optimum-value,
+.option-button-opt4 {
+  background: #4e4e4e;
+}
+.voting-option-percentage-bar-opt5::-webkit-meter-optimum-value,
+.option-button-opt5 {
+  background: #302e9e;
+}
+
+.option-button-opt6 {
+  background: #c25e1c;
+}
+
+.option-button-opt7 {
+  background: #6b3fa0;
+}
+
+.option-button-opt1,
+.option-button-opt2 {
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  width: 10%;
+  cursor: pointer;
+}
+
+.option-button-opt3,
+.option-button-opt4,
+.option-button-opt5,
+.option-button-opt6,
+.option-button-opt7 {
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  width: 14%;
+  cursor: pointer;
+}
+
+.option-button-opt8,
+.option-button-opt9,
+.option-button-opt10 {
+  color: rgb(226, 226, 226);
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  width: 25%;
+  cursor: pointer;
+}
+
+.option-button-opt8 {
+  background: #3f9da0;
+}
+
+.option-button-opt9 {
+  background: #a09e3f;
+}
+
+.option-button-opt10 {
+  background: #da920d;
+}
+
+.addOptionButton {
+  border-radius: 8px;
+  border-style: none;
+  background-color: #9e9e9e;
+  color: #101111;
+  cursor: pointer;
+}
+
+.addOptionButton:hover {
+  color: #ffffff;
+}
+
+.addOptionButton:disabled,
+.addOptionButton:disabled:hover {
+  background-color: #4b4b4b6e;
+  color: black;
+  cursor: default;
+}
+
+.option-button-opt1:hover,
+.option-button-opt2:hover,
+.option-button-opt3:hover,
+.option-button-opt4:hover,
+.option-button-opt5:hover {
+  color: #000000;
+}
+
+.modalOption {
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 20px;
+  display: flex;
+  align-self: center;
+  width: 90%;
+  margin-top: 3%;
+}
+
+.votingPercentage,
+.option-name {
+  display: block;
+  z-index: 1;
+  margin-left: 7%;
+}
+
+.votingPercentage {
+  font-weight: lighter;
+}
+
+.option-name {
+  font-weight: bold;
+}
+
+.votingPercentage > meter {
+  width: 100px;
+}
+
+.moreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4%;
+  margin-top: 3%;
+  padding: 1px 8px 4px;
+  border: 1px solid #848484;
+  border-radius: 16px;
+  font-size: 10px;
+}
+
+.cardBottomProposedOn {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left;
+  width: 20%;
+}
+
+.cardBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 2% 5% 0;
+}
+
+.timeText {
+  font-size: 10px;
+  font-weight: lighter;
+  text-align: right;
+  margin-top: 5%;
+  width: 18%;
+  height: 95%;
+}
+
+.unsupported {
+  background-color: rgb(182, 3, 3) !important;
+  color: white !important;
+}
+
+.detailsButton {
+  margin-bottom: 16px;
+  background-color: rgba(240, 248, 255, 0);
+  color: #0a8310;
+  border: 2px solid #0a8310;
+  border-radius: 24px;
+  transition: box-shadow 0.3s;
+  margin-left: 0;
+}
+
+.detailsButton:hover {
+  border: 2px solid #61a365;
+  box-shadow: 1px 2px 18px #61a365;
+  background-color: #0a8310;
+  color: rgb(255, 255, 255);
+}
+
+.viewCreateProposal {
+  position: fixed;
+  top: 10%;
+  width: 56%;
+  height: 75%;
+  background-color: #27282a;
+  color: rgb(255, 255, 255);
+  z-index: 2;
+  border-radius: 15px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.viewCreateProposal::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #101111;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.create-proposal-modal-create-button {
+  background-color: blue !important;
+  color: white;
+
+  &:disabled {
+    background-color: rgb(61, 17, 17) !important;
+    color: rgb(166, 166, 166) !important;
+  }
+
+  &:hover {
+    color: white !important;
+  }
+}
+
+.gov-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.incentivize-proposal {
+  width: 36%;
+  height: 56%;
+  background-color: #27282a;
+  color: rgb(255, 255, 255);
+  z-index: 2;
+  border-radius: 15px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.proposal-name {
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 4px;
+}
+
+.select-tokens-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.token-input {
+  display: block;
+  margin-top: 2%;
+  width: 56%;
+}
+
+datalist {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  writing-mode: horizontal-tb;
+}
+
+option {
+  padding: 0;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+input[type="number"] {
+  width: 100%;
+  font-size: 16px;
+  margin: 3% 0;
+}
+
+::backdrop {
+  background-color: #101111;
+  opacity: 0.5;
+  opacity: 0.75;
+}
+
+.options-buttons {
+  display: flex;
+  margin-top: 6%;
+  width: 56%;
+  justify-content: space-between;
+}
+
+.header-content-container {
+  display: block;
+  width: 64%;
+  height: 100%;
+}
+
+.voting-data,
+.header-content-container {
+  background-color: #27282a;
+  border-radius: 30px;
+  padding: 20px 8px;
+}
+
+.voting-data {
+  flex-direction: column;
+  width: 32%;
+}
+
+.proposalHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.voting-data-info {
+  display: flex;
+  width: 96%;
+  justify-content: space-between;
+}
+
+.voting-data-info span {
+  margin: 5px 16px;
+}
+
+.incentivize-button {
+  position: relative;
+  overflow: hidden;
+  margin-top: 4%;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #08660d, #0a8310);
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.incentivize-button:hover {
+  background: linear-gradient(90deg, #0c9112, #0cb315);
+}
+
+.incentivize-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, #08660d 10%, #24e744 50%);
+  opacity: 0;
+  animation: rippleEffect 1.5s ease-out infinite;
+}
+
+@keyframes rippleEffect {
+  0% {
+    opacity: 0.4;
+    width: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 200px;
+    height: 200px;
+  }
+}
+
+.proposalHeader button {
+  background-color: #fdfdfd21;
+  color: white;
+  border-radius: 32px;
+  font-size: 16px;
+  margin-bottom: 2%;
+  padding: 2px 16px;
+}
+
+.proposalContent {
+  height: 45%;
+  margin-top: 3%;
+  padding: 0 24px;
+  font-weight: 200;
+}
+
+.optionBottom {
+  display: block;
+  margin-top: 4%;
+}
+
+.modalOptionButton {
+  height: 40px;
+  width: 48%;
+  margin: 0 8px;
+  margin-top: 15px;
+  color: white;
+}
+
+.proposalform {
+  height: 50%;
+  justify-content: start;
+}
+
+.proposalTitle {
+  width: 75%;
+  margin-bottom: 1%;
+  margin-top: 1%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+}
+
+.proposalEndsIn {
+  width: 20%;
+  margin-left: 0.5%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+}
+
+.proposalContractAdd {
+  margin-top: 1%;
+  width: 97.5%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+}
+
+.proposalDetails {
+  position: inline-block;
+  height: 72%;
+  width: 97.5%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  text-align: start;
+  justify-content: flex-start;
+}
+
+.proposalDetails::placeholder {
+  text-align: start;
+  position: absolute;
+  top: 0;
+  left: 1%;
+  padding: 1%;
+}
+
+.proposalFunc,
+.proposalTarget {
+  width: 35%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  margin-top: 1%;
+}
+
+.proposalFuncParams {
+  width: 60%;
+  margin-left: 0.5%;
+  border-radius: 14px;
+  border-style: none;
+  padding: 1%;
+  margin-top: 1%;
+}
+
+.multiOptionHeader {
+  margin-top: 0.5%;
+  margin-bottom: 0.5%;
+}
+
+.multiOptionHeader > div > input {
+  margin-left: 3%;
+}
+
+.optionButtonsHolder {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.7rem;
+  width: 97.5%;
+}
+
+.optionButtonsHolder > span {
+  display: flex;
+  font-size: 8px;
+  justify-content: left;
+  align-items: center;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.2rem;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  height: 10%;
+}
+
+.modalFooter p {
+  margin-top: 0;
+  font-size: small;
+}
+
+.modalFooter a {
+  color: #0a8310;
+  text-decoration: none;
+}
+
+.modalFooter a:hover {
+  color: rgb(165, 255, 74);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modalFooter input {
+  background-color: #0a8310;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modalFooter input:hover {
+  color: rgb(31, 31, 31);
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #1ad423;
+}
+
+.modalFooter input:disabled,
+.modalFooter input:disabled:hover {
+  background-color: #043b07;
+  color: gray;
+  cursor: inherit;
+}
+
+.edit-proposal-option {
+  width: 30%;
+}
+
+.edit-proposal-option-text {
+  width: 52%;
+  height: 90%;
+  background-color: #4e4e4e;
+  border-radius: 7px;
+  font-size: 14px;
+  border-style: none;
+  text-align: center;
+  margin-left: 4%;
+}
+
+.edit-proposal-option-button {
+  padding: 0.3rem;
+  background-color: #0a8310;
+  margin-left: 0.5rem;
+  font-size: 74%;
+  text-align: center;
+  justify-content: center;
+}
+
+.edit-proposal-option-button-delete {
+  padding: 0.3rem;
+  background-color: #830a0a;
+  margin-left: 2%;
+  font-size: 74%;
+}
+
+.create-proposal-button-governance {
+  background-color: #0a8310;
+  color: white;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  width: 150px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-proposal-button-governance:disabled,
+.create-proposal-button-governance:disabled:hover {
+  color: rgba(153, 153, 153, 0.39);
+  background-color: rgba(5, 54, 7, 0.562);
+  border: none;
+  cursor: inherit;
+}
+
+.near-filter-bar {
+  margin: 0;
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  .voting-option-percentage-bar {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+@media screen and (max-width: 360px) and (max-height: 740px) {
+  .governanceHeader {
+    display: inline;
+  }
+
+  .cardHolder {
+    padding: 0%;
+    margin: 0;
+    width: 100%;
+  }
+
+  .proposalCard {
+    width: 36rem;
+    margin: 2% 0;
+  }
+
+  .modalOptionButton {
+    margin: 8px;
+  }
+
+  .near-filter-bar {
+    display: block;
+    max-width: 80%;
+    justify-content: space-evenly;
+  }
+
+  .near-filter-bar > * {
+    margin-top: 24px;
+  }
+
+  .near-filter-bar > span {
+    margin-inline-start: 88px;
+  }
+
+  .create-proposal-button-governance {
+    position: absolute;
+    top: 12%;
+    right: 5%;
+    width: 25%;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 430px) and (max-height: 932px) {
+  .gov-container {
+    display: inline-block;
+  }
+
+  .voting-data,
+  .header-content-container {
+    margin-bottom: 5px;
+    width: 95%;
+  }
+
+  .statusBadge {
+    margin: 8px;
+  }
+
+  .referendum-buttons {
+    display: block;
+  }
+
+  .referendum-buttons button {
+    width: 35%;
+  }
+
+  .post-referendum {
+    display: inline;
+    height: 45%;
+  }
+
+  .post-referendum button {
+    margin: 8px;
+    padding: 4px 0;
+    width: 35%;
+  }
+
+  .option-button-opt10 {
+    height: 42px;
+  }
+
+  .viewCreateProposal {
+    width: 85%;
+    height: 95%;
+    top: 1%;
+  }
+
+  .proposalDetails {
+    height: 50%;
+  }
+
+  .optionButtonsHolder {
+    margin-top: 4px;
+  }
+
+  .proposalHeader {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .incentivize-modal-header {
+    writing-mode: horizontal-tb;
+  }
+
+  .proposalHeader button {
+    margin-bottom: 18px;
+  }
+
+  .governanceHeader {
+    display: inline;
+  }
+
+  .cardHolder {
+    padding: 0%;
+    margin: 0;
+    width: 100%;
+  }
+
+  .proposalCard {
+    width: 36rem;
+    margin: 2% 0;
+  }
+
+  .modalOptionButton {
+    margin: 8px;
+  }
+
+  .near-filter-bar {
+    display: block;
+    max-width: 80%;
+    justify-content: space-evenly;
+  }
+
+  .near-filter-bar > * {
+    margin-top: 24px;
+  }
+  .near-filter-bar > span {
+    margin-inline-start: 97px;
+  }
+
+  .create-proposal-button-governance {
+    position: absolute;
+    top: 12%;
+    right: 5%;
+    width: 25%;
+  }
+
+  .incentivize-proposal {
+    width: 84%;
+    margin-top: 8%;
+    margin-bottom: 2%;
+    height: 72%;
+  }
+
+  .close-button {
+    width: 22%;
+    margin-bottom: 5px !important;
+  }
+
+  .incentivize-proposal h3 {
+    font-size: 22px;
+    margin-top: 7%;
+  }
+
+  .token-input {
+    width: 100%;
+    margin-top: 4%;
+  }
+
+  .options-buttons {
+    margin: 9% 0 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) and (max-height: 658px) {
+  .governanceHeader {
+    display: inline;
+  }
+
+  .cardHolder {
+    padding: 0%;
+    margin: 0;
+    width: 100%;
+  }
+
+  .proposalCard {
+    width: 36rem;
+    margin: 2% 0;
+  }
+
+  .modalOptionButton {
+    margin: 8px;
+  }
+
+  .near-filter-bar {
+    display: block;
+    max-width: 100%;
+    justify-content: space-between;
+  }
+
+  .near-filter-bar > * {
+    margin-top: 24px;
+  }
+
+  .near-filter-bar > span {
+    margin-inline-start: 62px;
+  }
+
+  .create-proposal-button-governance {
+    position: absolute;
+    top: 36%;
+    right: 5%;
+    width: 25%;
+  }
+}
