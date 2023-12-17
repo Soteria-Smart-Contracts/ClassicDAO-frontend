@@ -1,9 +1,26 @@
+// export const getPercentage = (_option, _options) => {
+//   const totalVotesAmount = Object.values(_options).reduce(
+//     (acc, curr) => acc + curr,
+//     0
+//   );
+//   const percentage = ((_options[_option] / totalVotesAmount) * 100).toFixed(2);
+
+//   return percentage;
+// };
+
 export const getPercentage = (_option, _options) => {
   const totalVotesAmount = Object.values(_options).reduce(
-    (acc, curr) => acc + curr,
+    (acc, curr) => acc + Number(curr), // Convert BigInt to number
     0
   );
-  const percentage = ((_options[_option] / totalVotesAmount) * 100).toFixed(2);
+
+  const optionVotes = Number(_options[_option]); // Convert BigInt to number
+
+  if (totalVotesAmount === 0) {
+    return 0; // Handle division by zero to avoid NaN or Infinity
+  }
+
+  const percentage = ((optionVotes / totalVotesAmount) * 100).toFixed(2);
 
   return percentage;
 };

@@ -172,10 +172,20 @@
 .voting-option-percentage-bar-opt1::-webkit-meter-optimum-value,
 .option-button-opt1 {
   background: #0a8310;
+
+  &:disabled {
+    background: #064409;
+    cursor: not-allowed;
+  }
 }
 .voting-option-percentage-bar-opt2::-webkit-meter-optimum-value,
 .option-button-opt2 {
   background: #9e2e2e;
+
+  &:disabled {
+    background: #571a1a;
+    cursor: not-allowed;
+  }
 }
 .voting-option-percentage-bar-opt3::-webkit-meter-optimum-value,
 .option-button-opt3 {
@@ -425,6 +435,7 @@
 
 .token-input {
   display: block;
+  margin: auto;
   margin-top: 2%;
   width: 56%;
 }

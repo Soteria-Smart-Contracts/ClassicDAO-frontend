@@ -20,6 +20,10 @@ export async function proposalLoader({ request }) {
 
 export async function individualProposalLoader({ params }) {
   const proposal = await getProposalData(params.proposalID);
+  const proposalID = params.proposalID;
 
-  return { proposal };
+  return {
+    // proposal
+    proposalID,
+  };
 }

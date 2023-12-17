@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useWeb3 } from "../../../hooks/useWeb3";
 import {
   getTokenBalance,
@@ -8,12 +9,13 @@ import {
 import { useOutsideClick } from "../../../hooks/useOutsideClick";
 import "./web3button.css";
 
-export default function Web3Button() {
+export default function Web3Button({ populateProposals }) {
   const { data, setter, functions } = useWeb3();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (data.address != "") {
+      populateProposals();
       const cldBalancePromise = getTokenBalance(
         functions.viewInContract,
         returnContractAddress("CLD"),
@@ -27,32 +29,32 @@ export default function Web3Button() {
         returnContractAddress("Core")
       );
 
-      const proposalCostPromise = functions.viewInContract(
-        "Core",
-        returnContractAddress("Core"),
-        "ProposalCost",
-        []
-      );
+      // const proposalCostPromise = functions.viewInContract(
+      //   "Core",
+      //   returnContractAddress("Core"),
+      //   "ProposalCost",
+      //   []
+      // );
 
-      const treasuryAssetCountPromise = functions.viewInContract(
-        "Treasury",
-        returnContractAddress("Treasury"),
-        "RegisteredAssetLimit",
-        []
-      );
+      // const treasuryAssetCountPromise = functions.viewInContract(
+      //   "Treasury",
+      //   returnContractAddress("Treasury"),
+      //   "RegisteredAssetLimit",
+      //   []
+      // );
 
       Promise.all([
         // Pull basic info from the blockchain
         cldBalancePromise,
         cldCoreAllowancePromise,
-        proposalCostPromise,
-        treasuryAssetCountPromise,
+        // proposalCostPromise,
+        // treasuryAssetCountPromise,
       ]).then(
         ([
           cldBalance,
           useCLDCoreAllowance,
-          proposalCostAmount,
-          treasuryAssetCount,
+          // proposalCostAmount,
+          // treasuryAssetCount,
         ]) => {
           setter((prevState) => ({
             ...prevState,
@@ -60,13 +62,13 @@ export default function Web3Button() {
               cldBalance: cldBalance.toString(), //toString() we can manipulate it later
               cldCoreAllowance: useCLDCoreAllowance.toString(),
             },
-            coreInfo: {
-              proposalCostInCLD: (
-                Number(proposalCostAmount) /
-                10 ** 18
-              ).toString(),
-              treasuryAssetNumber: Number(treasuryAssetCount),
-            },
+            // coreInfo: {
+            //   proposalCostInCLD: (
+            //     Number(proposalCostAmount) /
+            //     10 ** 18
+            //   ).toString(),
+            //   treasuryAssetNumber: Number(treasuryAssetCount),
+            // },
           }));
         }
       );
@@ -100,6 +102,9 @@ export default function Web3Button() {
         case 61: // ETC mainnet
         case "0x3d":
         case "61":
+        case 63: // ETC mordor testnet
+        case "0x3f":
+        case "63":
         case 5: // Goerli
         case "0x5":
         case "5":
@@ -149,3 +154,7 @@ export default function Web3Button() {
 
   return returnButtonMessage();
 }
+
+Web3Button.propTypes = {
+  populateProposals: PropTypes.func.isRequired,
+};

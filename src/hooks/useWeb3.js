@@ -16,6 +16,9 @@ export const isValidChain = (chain) => {
     case 61: // ETC mainnet
     case "0x3d":
     case "61":
+    case 63: // ETC mordor testnet
+    case "0x3f":
+    case "63":
     case 5: // Goerli
     case "0x5":
     case "5":

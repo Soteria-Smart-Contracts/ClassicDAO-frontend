@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useWeb3 } from "../../../hooks/useWeb3";
+import { useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
   sendTx,
@@ -10,14 +11,15 @@ import {
 
 const CreateProposalButton = (props) => {
   const { data, setter, functions } = useWeb3();
+  const [proposals, setProposals] = useOutletContext();
 
-  const { proposalForm, isLoading, setIsLoading } = props;
+  const { proposalForm, isLoading, setIsLoading, toggleModal } = props;
   const hasValidAllowance =
     BigInt(data.userInfo.cldCoreAllowance) >=
     BigInt(data.coreInfo.proposalCostInCLD);
   const hasEnoughCLD =
-    BigInt(Number(data.userInfo.cldBalance) / 10 ** 18) >=
-    BigInt(data.coreInfo.proposalCostInCLD);
+    Number(data.userInfo.cldBalance) / 10 ** 18 >=
+    data.coreInfo.proposalCostInCLD;
 
   const isProposalFormInvalid = () => {
     const basisPointsBasedProposals = [
@@ -73,7 +75,6 @@ const CreateProposalButton = (props) => {
       [setIsLoading]
     ).then((successful) => {
       if (successful) {
-        console.log("hiehie");
         setter((prevState) => ({
           ...prevState,
           userInfo: {
@@ -106,7 +107,7 @@ const CreateProposalButton = (props) => {
       buttonText = "Loading...";
     }
 
-    return buttonText;
+    return isLoading ? "Loading..." : "Create proposal"; // this needs to return buttonText
   };
 
   const handleCreateProposalClick = () => {
@@ -158,29 +159,57 @@ const CreateProposalButton = (props) => {
       );
     }
 
-    console.log(JSON.stringify(proposalFormToSend));
+    //console.log(JSON.stringify(proposalFormToSend));
 
     switch (proposalTypeNumber) {
       case 0:
         sendTx(
           functions.contractCall,
           functions.verifyTx,
-          "Core",
-          "SubmitSimpleProposal",
-          [
-            // We send the whole JSON to display it later
-            JSON.stringify(proposalFormToSend), // 0 memo
-            proposalFormToSend.proposalFuncParams[0], // 1 AddressSlot
-            proposalFormToSend.proposalFuncParams[1], // 2 UintSlot
-            simpleProposalType, // 3 SimpleType
-            proposalFormToSend.proposalEndsIn, // 4 VotingLength
-            proposalFormToSend.proposalFuncParams[2], // 5 RequestedEther
-            proposalFormToSend.proposalFuncParams[3], // 6 RequestedAssetAmount
-            proposalFormToSend.proposalFuncParams[4], // 7 RequestedAssetID
-          ],
+          // "Core",
+          // "SubmitSimpleProposal",
+          // [
+          //   // We send the whole JSON to display it later
+          //   JSON.stringify(proposalFormToSend), // 0 memo
+          //   proposalFormToSend.proposalFuncParams[0], // 1 AddressSlot
+          //   proposalFormToSend.proposalFuncParams[1], // 2 UintSlot
+          //   simpleProposalType, // 3 SimpleType
+          //   proposalFormToSend.proposalEndsIn, // 4 VotingLength
+          //   proposalFormToSend.proposalFuncParams[2], // 5 RequestedEther
+          //   proposalFormToSend.proposalFuncParams[3], // 6 RequestedAssetAmount
+          //   proposalFormToSend.proposalFuncParams[4], // 7 RequestedAssetID
+          // ],
+          "TestDAO",
+          "CreateProposal",
+          [proposalForm.proposalTitle],
           toast,
           [setIsLoading]
-        );
+        ).then((resp) => {
+          if (resp) {
+            const newProposal = {
+              title: proposalForm.proposalTitle,
+              proposer: "TEST",
+              status: "TEST",
+              startsIn: 0,
+              endsIn: 0,
+              content: "TEST",
+              options: {
+                Yes: BigInt(0),
+                No: BigInt(0),
+              },
+              multi: {},
+              passed: false,
+              executed: false,
+            };
+
+            const proposalsArray = [...proposals];
+            proposalsArray.push(newProposal);
+
+            setProposals(proposalsArray);
+            toggleModal();
+            toast(`New proposal named: ${proposalForm.proposalTitle} created`);
+          }
+        });
         break;
 
       case 1:
@@ -195,7 +224,6 @@ const CreateProposalButton = (props) => {
         break;
     }
 
-    //toast(`New proposal named: ${proposalForm.proposalTitle} created`);
     //}
     //}
   };
@@ -204,17 +232,20 @@ const CreateProposalButton = (props) => {
     <input
       type="button"
       className={
-        hasEnoughCLD && hasValidAllowance
-          ? ""
-          : "create-proposal-modal-create-button"
+        // hasEnoughCLD && hasValidAllowance
+        //   ? ""
+        //   :
+        "create-proposal-modal-create-button"
       }
       value={renderButtonContent()}
       onClick={
-        hasValidAllowance && !isProposalFormInvalid()
-          ? handleCreateProposalClick
-          : handleApproveTokens
+        // hasValidAllowance && !isProposalFormInvalid()
+        //   ? handleCreateProposalClick
+        //   : handleApproveTokens
+        handleCreateProposalClick
       }
-      disabled={hasEnoughCLD && hasValidAllowance && isProposalFormInvalid()}
+      //disabled={hasEnoughCLD && hasValidAllowance && isProposalFormInvalid()}
+      disabled={isLoading}
     />
   );
 };
@@ -232,6 +263,7 @@ CreateProposalButton.propTypes = {
   }).isRequired,
   isLoading: PropTypes.bool.isRequired,
   setIsLoading: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default CreateProposalButton;

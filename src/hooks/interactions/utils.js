@@ -1,4 +1,10 @@
-import { ERC20ABI, CoreABI, VotingABI, TreasuryABI } from "../../assets/abi";
+import {
+  ERC20ABI,
+  CoreABI,
+  VotingABI,
+  TreasuryABI,
+  TestDAO,
+} from "../../assets/abi";
 import { testProposals } from "../../assets/testInfo";
 
 export function returnABI(contractToCall) {
@@ -16,6 +22,9 @@ export function returnABI(contractToCall) {
     case "Treasury":
       return TreasuryABI;
 
+    case "TestDAO":
+      return TestDAO;
+
     default:
       break;
   }
@@ -25,10 +34,10 @@ export function returnContractAddress(contractToCall) {
   switch (contractToCall) {
     // todo change these on deploy
     case "Core":
-      return "0xE6667b8f8FC9ABAAa3100aB2F76827D1A7973A93";
+      return "0x24094183a2e25e40555CcB2292A3C76244CDBbdE";
 
     case "CLD":
-      return "0x5D08FC99cf526EC21ae44fA3471E88362000319D";
+      return "0xd683198d0a223Bc25ad6c199A86E08a4fcF3a77a";
 
     case "Treasury":
       return "0x7Df709cc477ba79ada138B23E1bf6CceadB65370";
@@ -38,6 +47,9 @@ export function returnContractAddress(contractToCall) {
 
     case "Sales":
       return "0x4F3D472947B7F944603BD8967a29F4E6C9cd2a85";
+
+    case "TestDAO":
+      return "0x24094183a2e25e40555CcB2292A3C76244CDBbdE";
 
     default:
       return "";
@@ -83,9 +95,37 @@ export const getAllowance = async (
     [userAddress, targetAddress]
   );
 
-  const formattedAllowance = Number(targetAllowance);
+  return targetAllowance; //.toLocaleString();
+};
 
-  return parseFloat(formattedAllowance / 10 ** Number(18)); //.toLocaleString();
+export const getTestProposals = async (_viewInContract) => {
+  const testProposalsNumber = await _viewInContract(
+    "TestDAO",
+    returnContractAddress("TestDAO"),
+    "ProposalCount",
+    []
+  );
+
+  let testProposals = [];
+
+  try {
+    for (let index = 1; index <= testProposalsNumber; index++) {
+      const element = await _viewInContract(
+        "TestDAO",
+        returnContractAddress("TestDAO"),
+        "GetProposalInfo",
+        [index]
+      );
+
+      testProposals.push(element);
+    }
+  } catch (error) {
+    console.log(error);
+
+    return false;
+  }
+
+  return testProposals;
 };
 
 export const getProposals = async () => {

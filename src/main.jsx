@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Web3Providers } from "./hooks/providers";
 import App from "./App";
 import Root from "./routes/landing";
 import Governance from "./routes/governance";
@@ -44,6 +45,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Web3Providers>
+      <RouterProvider router={router} />
+    </Web3Providers>
   </React.StrictMode>
 );

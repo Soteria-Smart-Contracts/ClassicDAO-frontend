@@ -1,16 +1,30 @@
 import { useState } from "react";
-import { useLoaderData, useLocation, Link } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation,
+  Link,
+  useOutletContext,
+} from "react-router-dom";
 import toast from "react-hot-toast";
 import { useWeb3, isValidChain } from "../hooks/useWeb3";
 import { IncentivizeProposalModal } from "../components";
 import { getPercentage } from "../components/Governance/renderUtils";
+import { sendTx, returnContractAddress } from "../components/Governance/utils";
 
 export default function Proposal() {
-  const { proposal } = useLoaderData();
-  const { data } = useWeb3();
+  const { proposalID } = useLoaderData();
+  const [proposals, setProposals] = useOutletContext();
+  const proposal = proposals[proposalID];
+
+  const { data, functions, setter } = useWeb3();
   let { state } = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [votingInfo, setVotingInfo] = useState({
+    option: "",
+    voteAmount: 0,
+  });
 
   function convertTimestamp(timestamp) {
     const date = new Date(timestamp * 1000);
@@ -33,12 +47,112 @@ export default function Proposal() {
     }
   };
 
+  const handleApproveTokens = () => {
+    toast(`Approving tokens to vote on proposal ${Number(proposalID) + 1}`);
+
+    sendTx(
+      functions.contractCall,
+      functions.verifyTx,
+      "CLD",
+      "approve",
+      [returnContractAddress("Core"), BigInt(votingInfo.voteAmount)],
+      toast,
+      [setIsLoading]
+    ).then((resp) => {
+      if (resp) {
+        setter((prevState) => ({
+          ...prevState,
+          userInfo: {
+            ...prevState.userInfo,
+            cldCoreAllowance: (
+              BigInt(prevState.userInfo.cldCoreAllowance) +
+              BigInt(votingInfo.voteAmount)
+            ).toString(),
+          },
+        }));
+
+        toast(`Approved tokens to vote on proposal ${proposalID + 1}`);
+      }
+    });
+  };
+
   const handleVotingOptionClick = (optionIndex) => {
-    toast(
-      `Voted on the option index ${optionIndex}, \n value: ${
-        Object.keys(proposal.options)[optionIndex]
-      }`
-    );
+    sendTx(
+      functions.contractCall,
+      functions.verifyTx,
+      "TestDAO",
+      "Vote",
+      [
+        Number(proposalID) + 1,
+        optionIndex === 0,
+        BigInt(votingInfo.voteAmount),
+      ],
+      toast,
+      [setIsLoading]
+    ).then((resp) => {
+      if (resp) {
+        toast(
+          `Voted ${Object.keys(proposal.options)[optionIndex]} on proposal ${
+            Number(proposalID) + 1
+          }`
+        );
+
+        setter((prevState) => ({
+          ...prevState,
+          userInfo: {
+            cldBalance: (
+              BigInt(prevState.userInfo.cldBalance) -
+              BigInt(votingInfo.voteAmount)
+            ).toString(),
+            cldCoreAllowance: (
+              BigInt(prevState.userInfo.cldCoreAllowance) -
+              BigInt(votingInfo.voteAmount)
+            ).toString(),
+          },
+        }));
+
+        const text = optionIndex === 0 ? "Yes" : "No";
+
+        setProposals((prevState) => {
+          const updatedProposals = prevState.map((proposal, index) => {
+            if (index === Number(proposalID)) {
+              const updatedOptions = {
+                ...proposal.options,
+                [text]: proposal.options[text] + BigInt(votingInfo.voteAmount),
+              };
+
+              return {
+                ...proposal,
+                options: updatedOptions,
+              };
+            }
+
+            return proposal;
+          });
+          console.log(updatedProposals);
+          return updatedProposals;
+        });
+      }
+    });
+  };
+
+  const handleRangeChange = (newPercentageValue) => {
+    const newAmountToSent =
+      (Number(data.userInfo.cldBalance) * newPercentageValue) / 100;
+
+    setVotingInfo((prevState) => ({
+      ...prevState,
+      voteAmount: newAmountToSent,
+    }));
+  };
+
+  const handleVoteAmountInputChange = (e) => {
+    const newValue = Number(e.target.value) * 10 ** 18;
+
+    setVotingInfo((prevState) => ({
+      ...prevState,
+      voteAmount: newValue,
+    }));
   };
 
   return (
@@ -58,17 +172,17 @@ export default function Proposal() {
             <button>&#11013; &nbsp;&nbsp; Back</button>
           </Link>
 
-          <span className="proposal-data">{proposal.proposer}</span>
+          {/* <span className="proposal-data">{proposal.proposer}</span> */}
 
           <span className="proposal-data">{proposal.title}</span>
           <span
             className={`statusBadge statusBadgeModal badge${proposal.status}`}
           >
-            {proposal.status}
+            {/* {proposal.status} */}
           </span>
         </div>
 
-        <div className="proposalContent">{proposal.content}</div>
+        {/* <div className="proposalContent">{proposal.content}</div> */}
 
         <div className="voting-area">
           {!data.connected && <h2> Please connect your wallet to vote </h2>}
@@ -93,26 +207,88 @@ export default function Proposal() {
                   </div>
                 )}
 
-              {proposal.status.toLowerCase() === "active" &&
+              {
+                // proposal.status.toLowerCase() === "active" &&
                 isValidChain(data.chain) && (
                   <>
                     <div className="multi-options-results">
                       <h4> Do you agree? </h4> <br />
-                      <div className="referendum-buttons">
-                        {Object.keys(proposal.options).map((option, index) => {
-                          return (
-                            <button
-                              key={option}
-                              className={`modalOptionButton option-button-opt${
-                                index + 1
-                              }`}
-                              onClick={() => handleVotingOptionClick(index)}
-                            >
-                              {option}
-                            </button>
-                          );
-                        })}
+                      <h3>
+                        You are holding {data.userInfo.cldBalance / 10 ** 18}{" "}
+                        CLD tokens
+                      </h3>
+                      <div className="token-input">
+                        <label htmlFor="tempB">
+                          Choose a token amount to incentivize:
+                        </label>
+                        <br />
+                        <input
+                          type="range"
+                          id="tempB"
+                          name="temp"
+                          list="values"
+                          value={
+                            (votingInfo.voteAmount /
+                              Number(data.userInfo.cldBalance)) *
+                            100
+                          }
+                          onChange={(e) =>
+                            handleRangeChange(Number(e.target.value))
+                          }
+                        />
+                        <datalist id="values">
+                          <option value="0" label="0" />
+                          <option value="25" label="25" />
+                          <option value="50" label="50" />
+                          <option value="75" label="75" />
+                          <option value="100" label="100" />
+                        </datalist>
+                        <input
+                          type="number"
+                          step="0.05"
+                          min="0"
+                          onChange={handleVoteAmountInputChange}
+                          value={(votingInfo.voteAmount / 10 ** 18).toFixed(2)}
+                        />
                       </div>
+                      {Number(data.userInfo.cldCoreAllowance) >=
+                        BigInt(votingInfo.voteAmount) &&
+                        votingInfo.voteAmount != 0 && (
+                          <div className="referendum-buttons">
+                            {Object.keys(proposal.options).map(
+                              (option, index) => {
+                                return (
+                                  <button
+                                    key={option}
+                                    className={`modalOptionButton option-button-opt${
+                                      index + 1
+                                    }`}
+                                    onClick={() =>
+                                      handleVotingOptionClick(index)
+                                    }
+                                    disabled={votingInfo.voteAmount === 0}
+                                  >
+                                    {option}
+                                  </button>
+                                );
+                              }
+                            )}
+                          </div>
+                        )}
+                      {Number(data.userInfo.cldCoreAllowance) <
+                        BigInt(votingInfo.voteAmount) && (
+                        <button
+                          onClick={handleApproveTokens}
+                          disabled={votingInfo.voteAmount === 0}
+                          style={{
+                            background: "blue",
+                            color:
+                              votingInfo.voteAmount === 0 ? "black" : "white",
+                          }}
+                        >
+                          Click to approve tokens
+                        </button>
+                      )}
                     </div>
 
                     {Object.keys(proposal.multi).length > 0 && (
@@ -133,7 +309,8 @@ export default function Proposal() {
                       </>
                     )}
                   </>
-                )}
+                )
+              }
             </>
           )}
         </div>
@@ -191,7 +368,7 @@ export default function Proposal() {
         </div>
 
         <div>
-          <h4> Information </h4>
+          {/* <h4> Information </h4>
 
           <div className="voting-data-info">
             <span className="cardTopName">Start date</span>
@@ -201,7 +378,7 @@ export default function Proposal() {
           <div className="voting-data-info">
             <span className="cardTopName">End date</span>
             <span>{convertTimestamp(proposal.endsIn)}</span>
-          </div>
+          </div> */}
         </div>
 
         <div>

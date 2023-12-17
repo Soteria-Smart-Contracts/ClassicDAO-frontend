@@ -6,7 +6,7 @@ import Web3Button from "./Web3Button";
 import Logo from "../../assets/Logo";
 import "./navbar.css";
 
-export default function Navbar({ proposals, q }) {
+export default function Navbar({ proposals, q, populateProposals }) {
   const [active, setActive] = useState(false);
   let currentLocation = useLocation();
 
@@ -66,7 +66,7 @@ export default function Navbar({ proposals, q }) {
         </div>
 
         <div className="web3-container">
-          <Web3Button />
+          <Web3Button populateProposals={populateProposals} />
         </div>
       </nav>
 
@@ -91,4 +91,5 @@ export default function Navbar({ proposals, q }) {
 Navbar.propTypes = {
   proposals: PropTypes.array.isRequired,
   q: PropTypes.string,
+  populateProposals: PropTypes.func.isRequired,
 };

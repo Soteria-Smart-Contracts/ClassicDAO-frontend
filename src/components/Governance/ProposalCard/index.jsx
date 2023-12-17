@@ -11,8 +11,15 @@ export default function ProposalCard({ proposalInfo, proposalID }) {
     Math.floor((startsIn - 1 * 24 * 60 * 60) * 1000)
   );
 
+  // const sortedOptions = Object.keys(options).sort((a, b) => {
+  //   return proposalInfo.options[b] - proposalInfo.options[a];
+  // });
+
   const sortedOptions = Object.keys(options).sort((a, b) => {
-    return proposalInfo.options[b] - proposalInfo.options[a];
+    const valueA = Number(proposalInfo.options[a]); // Convert BigInt to number
+    const valueB = Number(proposalInfo.options[b]); // Convert BigInt to number
+
+    return valueB - valueA;
   });
 
   const renderCreationDate = () => {
@@ -30,12 +37,12 @@ export default function ProposalCard({ proposalInfo, proposalID }) {
   return (
     <div className="proposalCard">
       <div className="cardTop">
-        <span className="cardTopLeft">
+        {/* <span className="cardTopLeft">
           <img src="/img/icons8-avatar-48.png" alt="proposer-img"></img>
           <span className="cardTopName">{proposer}</span>
-        </span>
+        </span> */}
 
-        <span className={`statusBadge badge${status}`}>{status}</span>
+        {/* <span className={`statusBadge badge${status}`}>{status}</span> */}
       </div>
 
       <div className="cardContent">
@@ -102,18 +109,18 @@ export default function ProposalCard({ proposalInfo, proposalID }) {
       </div>
 
       <div className="cardBottom">
-        <span className="cardBottomProposedOn">
+        {/* <span className="cardBottomProposedOn">
           Proposed on <br />
           {renderCreationDate()}
-        </span>
+        </span> */}
 
         <Link to={`/proposal/${proposalID}`} state={true}>
           <button className="detailsButton">View Details</button>
         </Link>
 
-        <span className="timeText">
+        {/* <span className="timeText">
           {getTimeText(currentDate, startsIn, endsIn)}
-        </span>
+        </span> */}
       </div>
     </div>
   );

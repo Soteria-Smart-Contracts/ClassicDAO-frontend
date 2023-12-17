@@ -26,20 +26,13 @@ export const sendTx = (
           _verifyTx(result.hash).then((status) => {
             switch (status) {
               case 0:
-                _toast("failure");
                 setIsLoading(false);
                 resolve(false);
                 break;
 
               case 1:
-                _toast("success");
                 setIsLoading(false);
                 resolve(true);
-                break;
-
-              default:
-                setIsLoading(false);
-                resolve(false);
                 break;
             }
           });

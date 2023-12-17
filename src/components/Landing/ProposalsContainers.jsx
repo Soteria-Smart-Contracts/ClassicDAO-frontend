@@ -61,8 +61,8 @@ function GovernanceResume({ proposals }) {
   const stakedValue = proposals.reduce((accumulator, proposal) => {
     const options = proposal.options;
     const values = Object.values(options);
-    const sum = values.reduce((acc, value) => acc + value, 0);
-    return accumulator + sum;
+    const sum = values.reduce((acc, value) => BigInt(acc) + value, 0);
+    return BigInt(accumulator) + sum;
   }, 0);
 
   return (

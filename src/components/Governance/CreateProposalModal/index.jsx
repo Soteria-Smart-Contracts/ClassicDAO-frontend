@@ -262,12 +262,12 @@ export default function CreateProposalModal(props) {
             <input
               label="Proposal title"
               type="text"
-              placeholder="Title"
+              placeholder="Memo"
               className="proposalTitle"
               required
               onChange={handleProposalDataChange}
             />
-            <input
+            {/* <input
               type="date"
               placeholder="Ends in"
               className="proposalEndsIn"
@@ -452,7 +452,7 @@ export default function CreateProposalModal(props) {
                   />
                 </>
               )}
-            </div>
+            </div> */}
 
             <div className="modalFooter">
               <p>
@@ -464,6 +464,7 @@ export default function CreateProposalModal(props) {
                 proposalForm={proposalForm}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                toggleModal={toggleModal}
               />
             </div>
           </form>
